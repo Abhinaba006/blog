@@ -58,7 +58,6 @@
     "caseless": "^0.12.0",
     "chalk": "^3.0.0",
     "char-regex": "^1.0.2",
-    "chokidar": "^3.5.1",
     "ci-info": "^2.0.0",
     "cjs-module-lexer": "^0.6.0",
     "class-utils": "^0.3.6",
