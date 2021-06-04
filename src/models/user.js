@@ -75,5 +75,5 @@ UserSchema.pre('save', async function (next) {
 })
 UserSchema.index({ username: 1, email: 1 }, { unique: true }); // forcing for unique
 const User = mongoose.model('User', UserSchema)
-User.createIndexes();
+// User.createIndexes();
 module.exports = User
