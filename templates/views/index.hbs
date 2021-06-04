@@ -1,0 +1,14 @@
+{{>header}}
+{{!-- <script src="/js/index.js"></script> --}}
+<form action="/blogs", method="post" id="btn">
+    <label for="text"></label>
+    <input type="text" name="text" id="blogtext" value="" placeholder="Enter your story">
+    <input type="submit" >
+</form>
+{{#each blogs}}
+    <div>
+        <span>{{this.text}}</span>
+        <br>
+        <span><h5>Written by {{this.author}}</h5></span>
+    </div>
+{{/each}}
