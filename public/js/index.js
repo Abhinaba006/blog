@@ -29,10 +29,11 @@
 //     })
 // })
 
-async function deleteBlog(id){
-    const response = await fetch('/blogs/'+id, {
-        method:'delete',
-
+function deleteBlog(id) {
+    console.log('1st')
+    fetch('/blogs/' + id, {
+        method: 'delete',
     })
+    // console.log(response)
     location.reload();
 }
