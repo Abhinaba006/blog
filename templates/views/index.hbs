@@ -1,5 +1,6 @@
 {{>header}}
-{{!-- <script src="/js/index.js"></script> --}}
+<script src="/js/index.js"></script>
+{{!-- <link rel="stylesheet" href="/css/master"> --}}
 <form action="/blogs", method="post" id="btn">
     <label for="text"></label>
     <input type="text" name="text" id="blogtext" value="" placeholder="Enter your story">
@@ -8,7 +9,9 @@
 {{#each blogs}}
     <div>
         <span>{{this.text}}</span>
-        <br>
+        <button id="delete-blog" onclick="deleteBlog('{{this._id}}')">delete</button>
+        {{!-- <br> --}}
         <span><h5>Written by {{this.author}}</h5></span>
+        
     </div>
 {{/each}}

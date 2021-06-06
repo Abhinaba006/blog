@@ -28,3 +28,11 @@
 //         });
 //     })
 // })
+
+async function deleteBlog(id){
+    const response = await fetch('/blogs/'+id, {
+        method:'delete',
+
+    })
+    location.reload();
+}
