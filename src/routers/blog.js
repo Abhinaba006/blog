@@ -5,11 +5,14 @@ const auth = require('../middlewares/auth')
 
 // render the home page
 router.get('/', auth, async (req, res) => {
+    const userid=req.user._id
+    // console.log(userid)
     try {
         // blogs = await Blogs.find({owner:req.user._id})
         blogs = await Blogs.find({})
         res.render('index', {
             blogs,
+            userid
             // author:req.user.name
         })
     } catch (error) {

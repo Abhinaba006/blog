@@ -29,8 +29,9 @@
 //     })
 // })
 
+
 function deleteBlog(id) {
-    console.log('1st')
+    // console.log('1st')
     fetch('/blogs/' + id, {
         method: 'delete',
     })

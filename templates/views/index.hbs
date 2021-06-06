@@ -1,17 +1,24 @@
 {{>header}}
 <script src="/js/index.js"></script>
-{{!-- <link rel="stylesheet" href="/css/master"> --}}
-<form action="/blogs", method="post" id="btn">
+{{!--
+<link rel="stylesheet" href="/css/master"> --}}
+<form action="/blogs" , method="post" id="btn">
     <label for="text"></label>
     <input type="text" name="text" id="blogtext" value="" placeholder="Enter your story">
-    <input type="submit" >
+    <input type="submit">
 </form>
+{{userid}}
+
 {{#each blogs}}
-    <div>
-        <span>{{this.text}}</span>
-        <button id="delete-blog" onclick="deleteBlog('{{this._id}}')">delete</button>
-        {{!-- <br> --}}
-        <span><h5>Written by {{this.author}}</h5></span>
-        
-    </div>
+<div>
+    <span>{{this.text}}</span>
+    {{#ifEquals ../userid this.owner }}
+    <button id="delete-blog" onclick="deleteBlog('{{this._id}}')">delete</button>
+    {{/ifEquals}}
+    {{!-- <br> --}}
+    <span>
+        <h5>Written by {{this.author}}</h5>
+    </span>
+
+</div>
 {{/each}}

@@ -13,6 +13,14 @@ const public = path.join(__dirname, '../public')
 const partials = path.join(__dirname, '../templates/partials')
 const view_path = path.join(__dirname, '../templates/views')
 
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+    // console.log(arg2)
+    // console.log(arg1.toString()===arg2.toString())
+    // console.log('\n')
+    return (arg1.toString() === arg2.toString()) ? options.fn(this) : options.inverse(this);
+});
+
+
 app = express()
 app.set('view engine', 'hbs')
 app.set('views', view_path)
