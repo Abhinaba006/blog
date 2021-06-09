@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const BlogsSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        default: true,
+    },
     text: {
         type: String,
         required: true,
@@ -12,15 +16,17 @@ const BlogsSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        // default: '000',
         ref: 'user'
     },
     author: {
         type: mongoose.Schema.Types.String,
         required: true,
-        default: 'Anonyomus',
+        // default: 'Anonyomus',
         ref: 'user'
     },
 })
 
+BlogsSchema.set('timestamps', true)
 const Blogs = mongoose.model('Blogs', BlogsSchema)
 module.exports = Blogs

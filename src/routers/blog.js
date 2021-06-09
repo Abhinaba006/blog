@@ -19,6 +19,21 @@ router.get('/', auth, async (req, res) => {
         res.status(400).send(error)
     }
 })
+
+router.get('/post', auth, async(req, res) =>{
+    res.render('newPost', {
+
+    })
+})
+
+router.get('/editpost/:id', auth, async (req, res)=>{
+    
+    const blog = await Blogs.findOne({_id:req.params.id})
+    res.render('editpost', {
+        blog
+    })
+})
+
 // save new post
 router.post('/blogs', auth, async (req, res) => {
     console.log(req.body)

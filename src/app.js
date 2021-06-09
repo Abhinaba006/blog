@@ -3,6 +3,7 @@ const path = require('path')
 const hbs = require('hbs')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
+const stringSlice = require('string-slice')
 
 const userRouter = require('./routers/user')
 const blogRouter = require('./routers/blog')
@@ -18,6 +19,11 @@ hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
     // console.log(arg1.toString()===arg2.toString())
     // console.log('\n')
     return (arg1.toString() === arg2.toString()) ? options.fn(this) : options.inverse(this);
+});
+
+hbs.registerHelper('trimDate', function(passedString) {
+    var theString = stringSlice(passedString.toString(), 4, 16);
+    return new hbs.SafeString(theString)
 });
 
 
