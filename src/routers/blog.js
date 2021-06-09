@@ -26,6 +26,7 @@ router.get('/post', auth, async(req, res) =>{
     })
 })
 
+// router for editing post
 router.get('/editpost/:id', auth, async (req, res)=>{
     
     const blog = await Blogs.findOne({_id:req.params.id})
@@ -34,9 +35,19 @@ router.get('/editpost/:id', auth, async (req, res)=>{
     })
 })
 
+router.post('/editpost/:id', auth, async (req, res)=>{
+    
+    const blog = await Blogs.findOne({_id:req.params.id})
+    blog.text = req.body.text,
+    blog.title = req.body.title
+
+    await blog.save()
+
+    res.redirect('/')
+})
 // save new post
 router.post('/blogs', auth, async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     const authenticated = true
     const blog = new Blogs({
         ...req.body,
@@ -54,7 +65,7 @@ router.post('/blogs', auth, async (req, res) => {
 // delete a blog, do it in ajax
 router.delete('/blogs/:id', auth, async(req, res)=>{
     try{
-        console.log(req.params.id)
+        // console.log(req.params.id)
         const blog = await Blogs.findOneAndDelete({
             _id:req.params.id,
             owner:req.user.id

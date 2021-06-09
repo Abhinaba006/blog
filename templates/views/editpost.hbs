@@ -1,6 +1,6 @@
 {{>header}}
 
-<form action="/blogs" , method="post" id="btn">
+<form action="/editpost/{{blog._id}}" , method="post" id="btn">
     <h2>Title of your post</h2>
     <label for="title"></label>
     <input type="text" name="title" placeholder="Title of header" value="{{blog.title}}">
