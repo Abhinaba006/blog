@@ -17,10 +17,10 @@
     <input type="email" name="email" id="email" value="" placeholder="Enter your email">
     <label for="password"></label>
     <input type="password" name="password" id="password" value="" placeholder="Enter your pasword">
-    <input type="submit">
+    
 </form> --}}
 {{>header}}
-<link href="../css/signup.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/signup.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 
 <body>
@@ -28,21 +28,28 @@
     <div class="box">
         <div class="container wrapper">
             <div class="input">
-                <form action="/user/login" , method="POST">
+                <form action="/user" , method="POST">
+                    <div class="col-auto">
+                        <label for="name" class="col-form-label">Name</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" name="name" class="form-control">
+                    </div>
                     <div class="col-auto">
                         <label for="email" class="col-form-label">email</label>
                     </div>
                     <div class="col-auto">
-                        <input type="email" class="form-control">
+                        <input type="email" name="email" class="form-control" value="a@a.a">
                     </div>
                     <div class="col-auto">
                         <label for="password" class="col-form-label">password</label>
                     </div>
                     <div class="col-auto">
-                        <input type="password" class="form-control">
+                        <input type="password" name="password" class="form-control" value="a">
                     </div>
                     <input type="submit" class="btn btn-light">
                 </form>
+                <a href="/user/login">Or login</a>
             </div>
         </div>
     </div>

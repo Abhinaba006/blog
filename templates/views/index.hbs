@@ -1,14 +1,14 @@
 {{>header}}
 <script src="/js/index.js"></script>
-{{!--
-<link rel="stylesheet" href="/css/master"> --}}
 
-<a href="/post"><h1>New Post 😋 </h1></a>
+<link rel="stylesheet" href="/css/master.css">
+
+<div class="btn btn-link"><a href="/post"><h1>New Post 😋 </h1></a></div>
 
 <br>
 
 {{#each blogs}}
-<div>
+<div class="container jumbotron">
     <h2>{{this.title}}</h2>
     <span>{{this.text}}</span>
     {{#ifEquals ../userid this.owner }}

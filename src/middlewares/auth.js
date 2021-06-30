@@ -17,10 +17,10 @@ const auth = async (req, res, next) => {
 
         req.token = token
         req.user = user
-
         next()
     } catch (error) {
-        res.render('login',{
+        console.log('something went wrong')
+        res.render('signup',{
             data:"please login"
         })
     }

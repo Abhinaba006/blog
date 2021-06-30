@@ -17,13 +17,20 @@ router.post('/user', async (req, res) => {
         res.status(201).redirect('/')
         // res.status(201).send({ result, token })
     } catch (e) {
-        // console.log(e)
-        res.render('login', {
+        console.log(e)
+        res.render('signup', {
             msg:"Some thing gone wrong, try again"
         })
     }
 })
 // route for logging in existing user
+router.get('/user/signup', async (req, res) => {
+    try {
+        res.render('signup')
+    } catch (e) {
+        res.status(401).send(e)
+    }
+})
 router.get('/user/login', async (req, res) => {
     try {
         res.render('login')
@@ -52,7 +59,7 @@ router.post('/user/login', async (req, res) => {
         // // res.redirect(redirectTo);
         // res.send({ user, token })
     } catch (e) {
-        res.render('login', {
+        res.render('signup', {
             msg:"Some thing gone wrong, try again\n"+e
         })
     }
