@@ -27,6 +27,7 @@ const BlogsSchema = new mongoose.Schema({
     },
     published:{
         type:Boolean,
+        required:true,
         default:false
     }
 })

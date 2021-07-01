@@ -31,7 +31,6 @@ router.get('/editpost/:id', auth, async (req, res) => {
 
     const blog = await Blogs.findOne({
         _id: req.params.id,
-        published: true
     })
 
     res.render('editpost', {
@@ -44,7 +43,11 @@ router.post('/editpost/:id', auth, async (req, res) => {
     const blog = await Blogs.findOne({ _id: req.params.id })
     blog.text = req.body.text,
         blog.title = req.body.title
-    blog.published = req.body.published
+    if (req.body.published)
+        blog.published = req.body.published
+    else
+        blog.published = false
+
 
     await blog.save()
 
