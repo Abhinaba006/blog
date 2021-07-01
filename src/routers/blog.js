@@ -36,7 +36,6 @@ router.get('/editpost/:id', auth, async (req, res) => {
 
     res.render('editpost', {
         blog,
-        blog_n
     })
 })
 
