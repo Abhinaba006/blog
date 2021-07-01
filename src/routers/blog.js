@@ -40,6 +40,7 @@ router.post('/editpost/:id', auth, async (req, res)=>{
     const blog = await Blogs.findOne({_id:req.params.id})
     blog.text = req.body.text,
     blog.title = req.body.title
+    blog.published = req.body.published
 
     await blog.save()
 
@@ -68,7 +69,7 @@ router.delete('/blogs/:id', auth, async(req, res)=>{
         // console.log(req.params.id)
         const blog = await Blogs.findOneAndDelete({
             _id:req.params.id,
-            owner:req.user.id
+            owner:req.user.id,
         })
         if(!blog)
         res.send()
