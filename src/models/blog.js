@@ -25,6 +25,10 @@ const BlogsSchema = new mongoose.Schema({
         // default: 'Anonyomus',
         ref: 'user'
     },
+    published:{
+        type:Boolean,
+        default:false
+    }
 })
 
 BlogsSchema.set('timestamps', true)

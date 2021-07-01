@@ -1,12 +1,15 @@
 {{>header}}
 
-<form action="/editpost/{{blog._id}}" , method="post" id="btn">
-    <h2>Title of your post</h2>
-    <label for="title"></label>
-    <input type="text" name="title" placeholder="Title of header" value="{{blog.title}}">
-    <h2>Enter The Story</h2>
-    <label for="text"></label>
-    <textarea name="text" placeholder="Enter your story">{{blog.text}}</textarea>
-    <br>
-    <input type="submit">
-</form>
+<body>
+    {{>nav}}
+    <form action="/editpost/{{blog._id}}" , method="post" id="btn">
+        <h2>Title of your post</h2>
+        <label for="title"></label>
+        <input type="text" name="title" placeholder="Title of header" value="{{blog.title}}">
+        <h2>Enter The Story</h2>
+        <label for="text"></label>
+        <textarea name="text" placeholder="Enter your story">{{blog.text}}</textarea>
+        <br>
+        <input type="submit">
+    </form>
+</body>

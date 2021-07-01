@@ -1,5 +1,6 @@
 const express = require('express')
 const auth = require('../middlewares/auth')
+const Blogs = require('../models/blog')
 const User = require('../models/user')
 const router = new express.Router()
 
@@ -23,6 +24,7 @@ router.post('/user', async (req, res) => {
         })
     }
 })
+
 // route for logging in existing user
 router.get('/user/signup', async (req, res) => {
     try {
@@ -31,6 +33,8 @@ router.get('/user/signup', async (req, res) => {
         res.status(401).send(e)
     }
 })
+
+// login user view
 router.get('/user/login', async (req, res) => {
     try {
         res.render('login')
@@ -39,6 +43,7 @@ router.get('/user/login', async (req, res) => {
     }
 })
 
+// login user
 router.post('/user/login', async (req, res) => {
     try {
         res.clearCookie('token');
@@ -64,10 +69,17 @@ router.post('/user/login', async (req, res) => {
         })
     }
 })
+
 // route to read profile
 router.get('/user/me', auth, async (req, res) => {
-    // const resu = await User.find({})
-    res.send(req.user)
+    // const esu = await User.find({})
+    const {name, email, _id} = req.user
+    const blogs = await Blogs.find({owner:_id})
+    res.render('me', {
+        name,
+        email,
+        blogs,
+    })
 })
 
 router.post('/user/logout', auth, async (req, res) => {
@@ -80,4 +92,5 @@ router.post('/user/logout', auth, async (req, res) => {
         res.send(error)
     }
 })
+
 module.exports = router

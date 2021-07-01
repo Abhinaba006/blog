@@ -1,3 +1,15 @@
 .h2 {
     border-bottom: .1ch solid blue;
 }
+
+.my-btn {
+    margin: .7em;
+}
+.nav {
+    border-bottom: .1ch solid rgb(53, 52, 52);
+}
+
+.nav-link {
+    font-size: 2em;
+    padding: .7em;
+}

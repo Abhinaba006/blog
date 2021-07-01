@@ -9,7 +9,7 @@ router.get('/', auth, async (req, res) => {
     // console.log(userid)
     try {
         // blogs = await Blogs.find({owner:req.user._id})
-        blogs = await Blogs.find({})
+        blogs = await Blogs.find({published:true})
         res.render('index', {
             blogs,
             userid

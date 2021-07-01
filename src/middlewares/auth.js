@@ -20,8 +20,8 @@ const auth = async (req, res, next) => {
         next()
     } catch (error) {
         console.log('something went wrong')
-        res.render('signup',{
-            data:"please login"
+        res.render('login',{
+            msg:'please login or sign up '
         })
     }
 }
