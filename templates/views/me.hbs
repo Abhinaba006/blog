@@ -1,4 +1,5 @@
 {{>header}}
+<script src="/js/index.js"></script>
 <body>
     {{>nav}}
     <h1>
@@ -16,7 +17,21 @@
     Created at {{{trimDate this.createdAt}}}
     <br>
     <br>
-    
+</div>
+{{/each}}
+
+<h2>Not published Post</h2>
+
+{{#each blogs_n}}
+<div class="container jumbotron alert alert-info">
+    <h2>{{this.title}}</h2>
+    <span>{{this.text}}</span>
+    <button id="delete-blog" onclick="deleteBlog('{{this._id}}')">delete</button>
+    <a href="/editpost/{{this._id}}"><button>Edit</button></a>
+    <br>
+    Created at {{{trimDate this.createdAt}}}
+    <br>
+    <br>
 </div>
 {{/each}}
 </body>

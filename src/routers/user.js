@@ -6,7 +6,7 @@ const router = new express.Router()
 
 //route for creating user
 router.post('/user', async (req, res) => {
-    const temp = User.findOne({email:req.body.email})
+    const temp = User.findOne({ email: req.body.email })
     const user = new User(req.body)
     // console.log(user)
     try {
@@ -20,7 +20,7 @@ router.post('/user', async (req, res) => {
     } catch (e) {
         console.log(e)
         res.render('signup', {
-            msg:"Some thing gone wrong, try again"
+            msg: "Some thing gone wrong, try again"
         })
     }
 })
@@ -48,7 +48,7 @@ router.post('/user/login', async (req, res) => {
     try {
         res.clearCookie('token');
         // console.log(req.body.password)
-        const user = await User.findByCredentials( req.body.email, req.body.password )
+        const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken();
         // console.log('hi')
         res.cookie('token', token, {
@@ -57,7 +57,7 @@ router.post('/user/login', async (req, res) => {
         res.redirect('/')
         // res.send('hi')
         // console.log(res.cookie[''])
-        
+
         // // var redirectTo = req.session.redirectTo || '/';
         // // delete req.session.redirectTo;
         // // // is authenticated ?
@@ -65,7 +65,7 @@ router.post('/user/login', async (req, res) => {
         // res.send({ user, token })
     } catch (e) {
         res.render('signup', {
-            msg:"Some thing gone wrong, try again\n"+e
+            msg: "Some thing gone wrong, try again\n" + e
         })
     }
 })
@@ -73,12 +73,20 @@ router.post('/user/login', async (req, res) => {
 // route to read profile
 router.get('/user/me', auth, async (req, res) => {
     // const esu = await User.find({})
-    const {name, email, _id} = req.user
-    const blogs = await Blogs.find({owner:_id})
+    const { name, email, _id } = req.user
+    const blogs = await Blogs.find({
+        owner: _id,
+        published: true
+    })
+    const blogs_n = await Blogs.find({
+        owner: _id,
+        published: false
+    })
     res.render('me', {
         name,
         email,
         blogs,
+        blogs_n
     })
 })
 
