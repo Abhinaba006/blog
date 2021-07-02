@@ -1,0 +1,14 @@
+{{>header}}
+{{>nav}}
+<body>
+    <ul class="list-group container">
+    {{#each users}}
+    <li class="list-group-item">
+        <a href="users/{{this._id}}">
+            {{name}}
+            <small class="text-muted">{{email}}</small>
+        </a>
+    </li>
+    {{/each}}
+</ul>
+</body>

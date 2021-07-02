@@ -11,6 +11,8 @@ const auth = async (req, res, next) => {
         // console.log(token)
         const decode = jwt.verify(token, process.env.SECRET_KEY)
         const user = await User.findOne({ _id: decode._id, 'tokens.token': token })
+
+        console.log(user)
         if (!user) {
             throw new Error('error')
         }
@@ -18,8 +20,8 @@ const auth = async (req, res, next) => {
         req.token = token
         req.user = user
         next()
-    } catch (error) {
-        console.log('something went wrong')
+    } catch (e) {
+        console.log(e)
         res.render('login',{
             msg:'please login or sign up '
         })

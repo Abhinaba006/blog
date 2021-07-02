@@ -5,10 +5,10 @@ const User = require('../models/user')
 const router = new express.Router()
 
 //route for creating user
-router.post('/user', async (req, res) => {
+router.post('/user', async(req, res) => {
     const temp = User.findOne({ email: req.body.email })
     const user = new User(req.body)
-    // console.log(user)
+        // console.log(user)
     try {
         const result = await user.save()
         const token = await user.generateAuthToken()
@@ -16,7 +16,7 @@ router.post('/user', async (req, res) => {
             httpOnly: true,
         })
         res.status(201).redirect('/')
-        // res.status(201).send({ result, token })
+            // res.status(201).send({ result, token })
     } catch (e) {
         console.log(e)
         res.render('signup', {
@@ -26,7 +26,7 @@ router.post('/user', async (req, res) => {
 })
 
 // route for logging in existing user
-router.get('/user/signup', async (req, res) => {
+router.get('/user/signup', async(req, res) => {
     try {
         res.render('signup')
     } catch (e) {
@@ -35,7 +35,7 @@ router.get('/user/signup', async (req, res) => {
 })
 
 // login user view
-router.get('/user/login', async (req, res) => {
+router.get('/user/login', async(req, res) => {
     try {
         res.render('login')
     } catch (e) {
@@ -44,7 +44,7 @@ router.get('/user/login', async (req, res) => {
 })
 
 // login user
-router.post('/user/login', async (req, res) => {
+router.post('/user/login', async(req, res) => {
     try {
         res.clearCookie('token');
         // console.log(req.body.password)
@@ -55,8 +55,8 @@ router.post('/user/login', async (req, res) => {
             httpOnly: true,
         });
         res.redirect('/')
-        // res.send('hi')
-        // console.log(res.cookie[''])
+            // res.send('hi')
+            // console.log(res.cookie['token'])
 
         // // var redirectTo = req.session.redirectTo || '/';
         // // delete req.session.redirectTo;
@@ -71,7 +71,7 @@ router.post('/user/login', async (req, res) => {
 })
 
 // route to read profile
-router.get('/user/me', auth, async (req, res) => {
+router.get('/user/me', auth, async(req, res) => {
     // const esu = await User.find({})
     const { name, email, _id } = req.user
     const blogs = await Blogs.find({
@@ -82,7 +82,7 @@ router.get('/user/me', auth, async (req, res) => {
         owner: _id,
         published: false
     })
-    res.render('me', {
+    res.render('profile', {
         name,
         email,
         blogs,
@@ -90,7 +90,41 @@ router.get('/user/me', auth, async (req, res) => {
     })
 })
 
-router.post('/user/logout', auth, async (req, res) => {
+router.get('/users', auth, async(req, res) => {
+    const users = await User.find({})
+    res.render('users', {
+        users
+    })
+})
+
+router.get('/users/:id', auth, async(req, res) => {
+    const user = await User.findOne({
+        _id: req.params.id
+    })
+
+    const blogs = await Blogs.find({
+        owner: user._id,
+        published: true
+    })
+    const blogs_n = false
+    if (user === req.user) {
+
+        blogs_n = await Blogs.find({
+            owner: user._id,
+            published: false
+        })
+    }
+    const { name, email } = user
+
+    res.render('profile', {
+        name,
+        email,
+        blogs,
+        blogs_n
+    })
+})
+
+router.get('/user/logout', auth, async(req, res) => {
     try {
         res.clearCookie('token');
         req.user.tokens = req.user.tokens.filter((token) => token.token != req.token)
