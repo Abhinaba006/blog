@@ -36,5 +36,5 @@ function deleteBlog(id) {
         method: 'delete',
     })
     // console.log(response)
-    location.reload();
+    location.assign('/');
 }

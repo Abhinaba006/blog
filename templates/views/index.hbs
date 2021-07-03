@@ -14,7 +14,7 @@
 
     {{#each blogs}}
     <div class="container jumbotron">
-        <h2>{{this.title}}</h2>
+        <h2><a href="blogs/{{this._id}}">{{this.title}}</a></h2>
         <span>{{this.text}}</span>
         {{#ifEquals ../userid this.owner }}
         <button id="delete-blog" onclick="deleteBlog('{{this._id}}')">delete</button>

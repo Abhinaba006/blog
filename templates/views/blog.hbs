@@ -1,0 +1,39 @@
+{{>header}}
+{{>nav}}
+
+<script src="/js/index.js"></script>
+
+<script src="/js/comment.js"></script>
+
+<body>
+    <div class="jumbotron">
+        <h1>{{blog.title}}</h1>
+        <p>{{blog.text}}</p>
+        {{#ifEquals userID blog.owner }}
+        <button id="delete-blog" onclick="deleteBlog('{{blog._id}}')">delete</button>
+        <a href="/editpost/{{blog._id}}"><button>Edit</button></a>
+        {{/ifEquals}}
+        <br>
+        Created at {{{trimDate blog.createdAt}}}
+        <br>
+        <i>Written by {{blog.author}}</i>
+    </div>
+    <div class="comment">
+        <form action="/blogs/comment/:id" method="post">
+            <input type="text" name="text" placeholder="Enter your comment">
+            <input type="hidden" name="postID" value={{blog._id}}>
+            <input type="submit" name="" id="">
+        </form>
+        {{#each comments}}
+        <div class="card">
+            <p>{{this.text}}</p>
+            <p class="text-muted"> by {{this.author}}</p>
+            <p class="text-muted">Created at {{{trimDate this.createdAt}}}</p>
+            {{#ifEquals ../userID this.owner }}
+            <button id="delete-blog" onclick="">delete</button>
+            <a href="#"><button>Edit</button></a>
+            {{/ifEquals}}
+        </div>
+        {{/each}}
+    </div>
+</body>

@@ -7,6 +7,7 @@ const stringSlice = require('string-slice')
 
 const userRouter = require('./routers/user')
 const blogRouter = require('./routers/blog')
+const commentRouter = require('./routers/comments')
 
 require('./db/mongoose')
 
@@ -39,5 +40,6 @@ app.use(express.static(public))
 app.use(express.json())
 app.use(userRouter)
 app.use(blogRouter)
+app.use(commentRouter)
 
 module.exports = app

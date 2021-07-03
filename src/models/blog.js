@@ -16,7 +16,6 @@ const BlogsSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        // default: '000',
         ref: 'user'
     },
     author: {
