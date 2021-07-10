@@ -4,10 +4,14 @@ const hbs = require('hbs')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const stringSlice = require('string-slice')
+const socketio = require('socket.io')
+const http = require('http')
 
 const userRouter = require('./routers/user')
 const blogRouter = require('./routers/blog')
 const commentRouter = require('./routers/comments')
+const chatRouter = require('./routers/chat')
+const {genMsg} = require('./utils/messages')
 
 require('./db/mongoose')
 
@@ -27,8 +31,12 @@ hbs.registerHelper('trimDate', function(passedString) {
     return new hbs.SafeString(theString)
 });
 
-
 app = express()
+const server = http.createServer(app)
+const io = socketio(server, {
+    cors:{origin:"*"}
+})
+
 app.set('view engine', 'hbs')
 app.set('views', view_path)
 hbs.registerPartials(partials)
@@ -42,4 +50,17 @@ app.use(userRouter)
 app.use(blogRouter)
 app.use(commentRouter)
 
-module.exports = app
+
+io.on('connection', (socket) => {
+    //connect msg
+    console.log(' A new connection')
+    socket.on('chat', (msg, cb) => {
+        console.log(msg)
+        io.emit('chat', genMsg(msg))
+        cb()
+    })
+    // disconnect msg
+})
+app.use(chatRouter)
+
+module.exports = {app, server}
