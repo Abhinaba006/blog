@@ -2,28 +2,29 @@
 
 <body>
     {{>nav}}
-    <script src="/js/index.js"></script>
-
-    <link rel="stylesheet" href="/css/master.css">
-
-    <div class="btn btn-link"><a href="/post">
-            <h1>New Post 😋</h1>
-        </a></div>
-
-    <br>
-
-    {{#each blogs}}
-    <div class="container jumbotron">
-        <h2><a href="blogs/{{this._id}}">{{this.title}}</a></h2>
-        <span>{{this.text}}</span>
-        {{#ifEquals ../userid this.owner }}
-        <button id="delete-blog" onclick="deleteBlog('{{this._id}}')">delete</button>
-        <a href="/editpost/{{this._id}}"><button>Edit</button></a>
-        {{/ifEquals}}
-        <br>
-        Created at {{{trimDate this.createdAt}}}
-        <br>
-        <i>Written by {{this.author}}</i>
+    <div class="page-shell">
+        <div class="page-card">
+            <div class="page-header">
+                <h1>All Posts</h1>
+                <div class="page-actions">
+                    <a href="/post" class="btn btn-primary">New Post</a>
+                </div>
+            </div>
+            {{#each blogs}}
+            <div class="card">
+                <h2><a href="blogs/{{this._id}}" class="text-dark">{{this.title}}</a></h2>
+                <p>{{this.text}}</p>
+                <div class="card-actions">
+                    {{#ifEquals ../userid this.owner }}
+                    <button id="delete-blog" onclick="deleteBlog('{{this._id}}')" class="btn btn-secondary">Delete</button>
+                    <a href="/editpost/{{this._id}}" class="btn btn-secondary">Edit</a>
+                    {{/ifEquals}}
+                </div>
+                <small>Created at {{{trimDate this.createdAt}}}</small>
+                <small>Written by {{this.author}}</small>
+            </div>
+            {{/each}}
+        </div>
     </div>
-    {{/each}}
+    <script src="/js/index.js"></script>
 </body>

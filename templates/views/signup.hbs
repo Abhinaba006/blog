@@ -24,32 +24,33 @@
 </head>
 
 <body>
-    {{msg}}
-    <div class="box">
-        <div class="container wrapper">
-            <div class="input">
-                <form action="/user" , method="POST">
-                    <div class="col-auto">
-                        <label for="name" class="col-form-label">Name</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="text" name="name" class="form-control">
-                    </div>
-                    <div class="col-auto">
-                        <label for="email" class="col-form-label">email</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="email" name="email" class="form-control" value="a@a.a">
-                    </div>
-                    <div class="col-auto">
-                        <label for="password" class="col-form-label">password</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="password" name="password" class="form-control" value="a">
-                    </div>
-                    <input type="submit" class="btn btn-light">
-                </form>
-                <a href="/user/login">Or login</a>
+    <div class="auth-page">
+        <div class="auth-card">
+            {{#if msg}}
+            <div class="auth-alert alert alert-danger" role="alert">{{msg}}</div>
+            {{/if}}
+            <div class="auth-header">
+                <h1>Create account</h1>
+                <p>Join now and start publishing your stories.</p>
+            </div>
+            <form action="/user" method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit">Create account</button>
+            </form>
+            <div class="auth-footer">
+                <span>Already have an account?</span>
+                <a href="/user/login">Sign in</a>
             </div>
         </div>
     </div>

@@ -2,23 +2,29 @@
 
 <body>
     {{>nav}}
-
-    <form action="/blogs" method="post" id="new-post-form">
-        <h2>Title of your post</h2>
-        <label for="title"></label>
-        <input type="text" name="title" id="post-title" placeholder="Title of header">
-        <h2>Enter The Story</h2>
-        <label for="text"></label>
-        <textarea name="text" id="post-text" placeholder="Enter your story"></textarea>
-        <br>
-        <div class="form-check" id="publish-wrapper" style="display: none;">
-            <label class="form-check-label" for="publish-checkbox">
-                <input class="form-check-input" type="checkbox" value="true" id="publish-checkbox" name="published">
-                Publish to public
-            </label>
+    <div class="page-shell">
+        <div class="page-card page-form">
+            <div class="page-header">
+                <h1>New Post</h1>
+            </div>
+            <form action="/blogs" method="post" id="new-post-form" class="auth-form">
+                <div class="form-group">
+                    <label for="post-title">Title</label>
+                    <input type="text" name="title" id="post-title" class="form-control" placeholder="Title of header" required>
+                </div>
+                <div class="form-group">
+                    <label for="post-text">Content</label>
+                    <textarea name="text" id="post-text" class="form-control" placeholder="Enter your story" required></textarea>
+                </div>
+                <div class="form-group" id="publish-wrapper" style="display: none;">
+                    <label for="publish-checkbox">
+                        <input type="checkbox" value="true" id="publish-checkbox" name="published">
+                        Publish to public
+                    </label>
+                </div>
+                <button type="submit" id="post-submit" class="btn btn-primary" disabled>Post</button>
+            </form>
         </div>
-        <br>
-        <input type="submit" id="post-submit" value="Post" disabled>
-    </form>
+    </div>
     <script src="/js/newPost.js"></script>
 </body>

@@ -1,27 +1,103 @@
 body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    background: #7f62ff !important;
+    min-height: 100%;
+    background: #f4f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.wrapper {
-    height: 400px;
-    width: 350px;
-    margin-top: 5em;
-    margin-bottom: auto;
-    background: #b2da05;
-    position: relative;
+.auth-page {
+    min-height: 100vh;
     display: flex;
+    align-items: center;
     justify-content: center;
-    flex-direction: column;
-    /* padding: 10px; */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
+    padding: 2rem;
 }
 
-.btn {
-    margin-top: 1em;
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border: 1px solid #e5e8ef;
+    border-radius: 16px;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08);
+    padding: 2rem;
+}
+
+.auth-header h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.auth-header p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.auth-alert {
+    margin-bottom: 1rem;
+}
+
+.auth-form {
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-control {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    color: #111827;
+}
+
+.form-control:focus {
+    border-color: #5b9df9;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 0.9rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.auth-footer {
+    margin-top: 1.25rem;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.auth-footer a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.btn-light {
+    background: #f8fafc;
+    border: 1px solid #d1d5db;
+    color: #111827;
 }

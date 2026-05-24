@@ -1,9 +1,156 @@
-.h2 {
-    border-bottom: .1ch solid blue;
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #f4f7fb;
+    color: #1f2937;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.my-btn {
-    margin: .7em;
+.page-shell {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background: #f4f7fb;
+}
+
+.page-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1.25rem;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08);
+}
+
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.page-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background: #ffffff;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.04);
+    margin-bottom: 1rem;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.card p,
+.card span,
+.card small {
+    color: #4b5563;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.btn-primary {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+    border-radius: 0.85rem;
+    padding: 0.85rem 1.25rem;
+}
+
+.btn-secondary,
+.btn-light {
+    background: #f8fafc;
+    border: 1px solid #d1d5db;
+    color: #111827;
+    border-radius: 0.85rem;
+    padding: 0.85rem 1.25rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-control {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.85rem;
+    color: #111827;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.text-muted {
+    color: #6b7280 !important;
+}
+
+.comment-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.comment-form input[type="text"] {
+    flex: 1;
+}
+
+#messages {
+    margin: 1.25rem 0;
+}
+
+.message-card {
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: #f9fafb;
+    margin-bottom: 0.85rem;
+}
+
+.nav {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.nav-link {
+    font-size: 1rem;
+    padding: 0.75rem;
+    color: #111827 !important;
+}
+
+.nav-link:hover {
+    color: #2563eb !important;
 }
 .nav {
     border-bottom: .1ch solid rgb(53, 52, 52);

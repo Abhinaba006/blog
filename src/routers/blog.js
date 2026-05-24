@@ -1,14 +1,11 @@
 const express = require('express')
-const Blogs = require('../models/blog')
-const Comments = require('../models/comments')
+const blogService = require('../services/blogService')
 const router = new express.Router()
 const auth = require('../middlewares/auth')
-console.log('hi')
-// render the home page
 router.get('/', auth, async (req, res) => {
     const userid = req.user._id
     try {
-        blogs = await Blogs.find({ published: true })
+        const blogs = await blogService.getPublishedBlogs()
         res.render('index', {
             blogs,
             userid
@@ -19,16 +16,17 @@ router.get('/', auth, async (req, res) => {
 })
 
 router.get('/blogs/:id', auth, async (req, res) => {
-    const blog = await Blogs.findOne({ _id: req.params.id })
-    const comments = await Comments.find({ postID: blog._id })
-
-    const userID = req.user._id
-
-    res.render('blog', {
-        blog,
-        comments,
-        userID
-    })
+    try {
+        const { blog, comments } = await blogService.getBlogWithComments(req.params.id)
+        const userID = req.user._id
+        res.render('blog', {
+            blog,
+            comments,
+            userID
+        })
+    } catch (error) {
+        res.status(404).send(error.message)
+    }
 })
 
 router.get('/post', auth, async (req, res) => {
@@ -39,77 +37,53 @@ router.get('/post', auth, async (req, res) => {
 
 // router for editing post
 router.get('/editpost/:id', auth, async (req, res) => {
-
-    const blog = await Blogs.findOne({
-        _id: req.params.id,
-    })
-
-    res.render('editpost', {
-        blog,
-    })
+    try {
+        const blog = await blogService.getBlogForEdit(req.params.id)
+        res.render('editpost', {
+            blog,
+        })
+    } catch (error) {
+        res.status(404).send(error.message)
+    }
 })
 
 router.post('/editpost/:id', auth, async (req, res) => {
-
-    const blog = await Blogs.findOne({ _id: req.params.id })
-    blog.text = req.body.text,
-    blog.title = req.body.title
-    if (req.body.published)
-        blog.published = req.body.published
-    else
-        blog.published = false
-
-    if (!blog.text || !blog.title) {
-        return res.status(400).send({ error: 'Title and text are required' })
+    try {
+        await blogService.updateBlog(req.params.id, {
+            title: req.body.title,
+            text: req.body.text,
+            published: req.body.published
+        })
+        res.redirect('/')
+    } catch (error) {
+        res.status(400).send({ error: error.message })
     }
-
-    await blog.save()
-
-    res.redirect('/')
 })
 
 
 router.post('/blogs', auth, async (req, res) => {
-    const title = req.body.title ? req.body.title.trim() : ''
-    const text = req.body.text ? req.body.text.trim() : ''
-
-    if (!title) {
-        return res.status(400).send({ error: 'Title is required' })
-    }
-
-    if (!text) {
-        return res.status(400).send({ error: 'Text is required' })
-    }
-
-    const blog = new Blogs({
-        title,
-        text,
-        published: req.body.published ? true : false,
-        owner: req.user._id,
-        author: req.user.name
-    })
     try {
-        result = await blog.save()
+        await blogService.createBlog({
+            title: req.body.title,
+            text: req.body.text,
+            published: req.body.published,
+            owner: req.user._id,
+            author: req.user.name
+        })
         res.redirect('/')
     } catch (error) {
-        res.status(400).send()
+        res.status(400).send({ error: error.message })
     }
 })
 
 router.delete('/blogs/:id', auth, async (req, res) => {
     try {
-        // console.log(req.params.id)
-        const blog = await Blogs.findOneAndDelete({
-            _id: req.params.id,
-            owner: req.user.id,
-        })
-
-        await Comments.deleteMany({ postID: blog._id })
-
-        if (!blog)
-            res.send()
+        const blog = await blogService.deleteBlog(req.params.id, req.user.id)
+        if (!blog) {
+            return res.send()
+        }
+        res.send()
     } catch (e) {
-        // console.log(e)
         res.status(501).send()
     }
 })
