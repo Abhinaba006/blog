@@ -5,8 +5,17 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#message-template').innerHTML
 
 const $messageForm = document.querySelector('#message-form')
-let $messageFormInput = $messageForm.querySelector('input')
-const $messageFormBtn = $messageForm.querySelector('button')
+const $messageFormInput = document.querySelector('#message-input')
+const $messageFormBtn = document.querySelector('#message-send')
+
+$messageFormInput.addEventListener('input', () => {
+    const value = $messageFormInput.value.trim()
+    $messageFormBtn.disabled = value.length === 0
+})
+
+const isMessageValid = (text) => {
+    return typeof text === 'string' && text.trim().length > 0
+}
 
 // send message
 socket.on('chat', (msg)=>{
@@ -20,22 +29,24 @@ socket.on('chat', (msg)=>{
 
     $messages.appendChild(message)
 })
-    // const html = Mustache.render(messageTemplate, msg)
-    // console.log(html)
-    // $messages.insertAdjacentHTML('afterend', html)
-// })
 
 $messageForm.addEventListener('submit', (e)=>{
-    $messageFormBtn.setAttribute('disabled', 'disabled')
     e.preventDefault()
-    const message = e.target.elements.message.value
-    const myname = document.querySelector('#myname').textContent
-    socket.emit('chat', {message, myname}, (e)=>{
-        console.log('msg sent')
-        $messageFormBtn.removeAttribute('disabled')
+    const message = $messageFormInput.value
+    if (!isMessageValid(message)) {
         $messageFormInput.value = ''
-        $messageFormInput.focus ()
-        if(e)   console.log(e)
+        $messageFormBtn.disabled = true
+        return
+    }
+
+    $messageFormBtn.disabled = true
+    const myname = document.querySelector('#myname').textContent
+    socket.emit('chat', {message, myname}, (err)=>{
+        console.log('msg sent')
+        $messageFormInput.value = ''
+        $messageFormBtn.disabled = true
+        $messageFormInput.focus()
+        if(err) console.log(err)
         else console.log('done')
     })
 })

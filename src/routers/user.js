@@ -47,22 +47,12 @@ router.get('/user/login', async(req, res) => {
 router.post('/user/login', async(req, res) => {
     try {
         res.clearCookie('token');
-        // console.log(req.body.password)
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken();
-        // console.log('hi')
         res.cookie('token', token, {
             httpOnly: true,
         });
         res.redirect('/')
-            // res.send('hi')
-            // console.log(res.cookie['token'])
-
-        // // var redirectTo = req.session.redirectTo || '/';
-        // // delete req.session.redirectTo;
-        // // // is authenticated ?
-        // // res.redirect(redirectTo);
-        // res.send({ user, token })
     } catch (e) {
         res.render('signup', {
             msg: "Some thing gone wrong, try again\n" + e
@@ -72,7 +62,6 @@ router.post('/user/login', async(req, res) => {
 
 // route to read profile
 router.get('/user/me', auth, async(req, res) => {
-    // const esu = await User.find({})
     const { name, email, _id } = req.user
     const blogs = await Blogs.find({
         owner: _id,
@@ -86,7 +75,8 @@ router.get('/user/me', auth, async(req, res) => {
         name,
         email,
         blogs,
-        blogs_n
+        blogs_n,
+        isEditable: true
     })
 })
 
@@ -106,9 +96,9 @@ router.get('/users/:id', auth, async(req, res) => {
         owner: user._id,
         published: true
     })
-    const blogs_n = false
-    if (user === req.user) {
-
+    let blogs_n = false
+    const isEditable = user._id.toString() === req.user._id.toString()
+    if (isEditable) {
         blogs_n = await Blogs.find({
             owner: user._id,
             published: false
@@ -120,7 +110,8 @@ router.get('/users/:id', auth, async(req, res) => {
         name,
         email,
         blogs,
-        blogs_n
+        blogs_n,
+        isEditable
     })
 })
 

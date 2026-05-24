@@ -2,24 +2,23 @@
 
 <body>
     {{>nav}}
-    {{!--
-    <script src="newPost.js"></script> --}}
 
-    <form action="/blogs" , method="post" id="btn">
+    <form action="/blogs" method="post" id="new-post-form">
         <h2>Title of your post</h2>
         <label for="title"></label>
-        <input type="text" name="title" placeholder="Title of header">
+        <input type="text" name="title" id="post-title" placeholder="Title of header">
         <h2>Enter The Story</h2>
         <label for="text"></label>
-        <textarea name="text" value="" placeholder="Enter your story"></textarea>
+        <textarea name="text" id="post-text" placeholder="Enter your story"></textarea>
         <br>
-        <div class="form-check">
-            <label class="form-check-label" for="flexCheckDefault"></label>
-            <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" name="published">
+        <div class="form-check" id="publish-wrapper" style="display: none;">
+            <label class="form-check-label" for="publish-checkbox">
+                <input class="form-check-input" type="checkbox" value="true" id="publish-checkbox" name="published">
                 Publish to public
             </label>
         </div>
         <br>
-        <input type="submit">
+        <input type="submit" id="post-submit" value="Post" disabled>
     </form>
+    <script src="/js/newPost.js"></script>
 </body>

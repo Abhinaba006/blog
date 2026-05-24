@@ -7,7 +7,6 @@ const public = path.join(__dirname, '../public')
 
 router.get('/chat', auth, (req, res) => {
     const name = req.user.name
-    // console.log(name)
     res.render('chat', {
         name
     })

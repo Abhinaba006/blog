@@ -9,10 +9,6 @@ const BlogsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // author is the one who is loggedin
-    // author:{
-    //     type: String,
-    // },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -21,7 +17,6 @@ const BlogsSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.String,
         required: true,
-        // default: 'Anonyomus',
         ref: 'user'
     },
     published:{
