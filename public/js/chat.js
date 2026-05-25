@@ -10,7 +10,8 @@ const $messageFormBtn = document.querySelector('#message-send')
 
 $messageFormInput.addEventListener('input', () => {
     const value = $messageFormInput.value.trim()
-    $messageFormBtn.disabled = value.length === 0
+    const isEmpty = value.length === 0
+    $messageFormBtn.disabled = isEmpty
 })
 
 const isMessageValid = (text) => {
@@ -19,15 +20,16 @@ const isMessageValid = (text) => {
 
 // send message
 socket.on('chat', (msg)=>{
-    // console.log('hi ', msg)
-    const message = document.createElement('div')
-    message.innerHTML = messageTemplate
-    console.log(msg)
-    message.querySelector('.name').textContent = 'by '+msg.name
-    message.querySelector('.text').textContent = msg.text
-    message.querySelector('.time').textContent = moment(msg.createdAt).fromNow()
-
-    $messages.appendChild(message)
+    try {
+        const message = document.createElement('div')
+        message.innerHTML = messageTemplate
+        message.querySelector('.name').textContent = 'by '+msg.name
+        message.querySelector('.text').textContent = msg.text
+        message.querySelector('.time').textContent = moment(msg.createdAt).fromNow()
+        $messages.appendChild(message)
+    } catch (error) {
+        console.error('Error rendering chat message:', error)
+    }
 })
 
 $messageForm.addEventListener('submit', (e)=>{
@@ -40,14 +42,14 @@ $messageForm.addEventListener('submit', (e)=>{
     }
 
     $messageFormBtn.disabled = true
-    const myname = document.querySelector('#myname').textContent
+    const myname = document.querySelector('#name').textContent.split('as ')[1].trim()
     socket.emit('chat', {message, myname}, (err)=>{
-        console.log('msg sent')
+        if(err) {
+            console.error('Error sending message:', err)
+        }
         $messageFormInput.value = ''
         $messageFormBtn.disabled = true
         $messageFormInput.focus()
-        if(err) console.log(err)
-        else console.log('done')
     })
 })
 

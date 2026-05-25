@@ -20,4 +20,5 @@ if ($titleInput && $textInput) {
     $titleInput.addEventListener('input', validatePost)
     $textInput.addEventListener('input', validatePost)
     validatePost()
+} else {
 }

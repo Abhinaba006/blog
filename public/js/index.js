@@ -2,5 +2,10 @@ function deleteBlog(id) {
     fetch('/blogs/' + id, {
         method: 'delete',
     })
-    location.assign('/');
+    .then(() => {
+        location.assign('/');
+    })
+    .catch((error) => {
+        console.error('Error deleting blog:', error)
+    })
 }

@@ -2,11 +2,13 @@ const express = require('express')
 const router = new express.Router();
 const path = require('path')
 const auth = require('../middlewares/auth.js')
+const logger = require('../utils/logger')
 const public = path.join(__dirname, '../public')
 
 
 router.get('/chat', auth, (req, res) => {
     const name = req.user.name
+    logger.info('chat-router', 'User accessing chat page', { userId: req.user._id, userName: name })
     res.render('chat', {
         name
     })

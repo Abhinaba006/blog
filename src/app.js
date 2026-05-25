@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const stringSlice = require('string-slice')
 const socketio = require('socket.io')
 const http = require('http')
+const logger = require('./utils/logger')
 
 const userRouter = require('./routers/user')
 const blogRouter = require('./routers/blog')
@@ -49,14 +50,16 @@ app.use(commentRouter)
 
 
 io.on('connection', (socket) => {
-    //connect msg
-    console.log(' A new connection')
+    logger.info('socket-io', 'New client connection', { socketId: socket.id })
     socket.on('chat', (msg, cb) => {
-        console.log(msg)
+        logger.debug('socket-io', 'Chat message received', { socketId: socket.id, message: msg.message })
         io.emit('chat', genMsg(msg))
+        logger.info('socket-io', 'Chat message broadcast', { socketId: socket.id })
         cb()
     })
-    // disconnect msg
+    socket.on('disconnect', () => {
+        logger.info('socket-io', 'Client disconnected', { socketId: socket.id })
+    })
 })
 app.use(chatRouter)
 

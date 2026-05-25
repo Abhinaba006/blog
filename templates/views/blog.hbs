@@ -24,20 +24,21 @@
             <div class="page-header">
                 <h2>Comments</h2>
             </div>
-            <form action="/blogs/comment/:id" method="post" class="comment-form">
-                <input type="text" name="text" class="form-control" placeholder="Enter your comment">
-                <input type="hidden" name="postID" value={{blog._id}}>
+            
+            <form id="comment-form" class="comment-form">
+                <input type="text" name="text" id="comment-text" class="form-control" placeholder="Enter your comment">
+                <input type="hidden" name="postID" id="comment-post-id" value="{{blog._id}}">
                 <button type="submit" class="btn btn-primary">Post Comment</button>
             </form>
             {{#each comments}}
-            <div class="message-card">
-                <p>{{this.text}}</p>
+            <div class="message-card" data-comment-id="{{this._id}}">
+                <p class="comment-text">{{this.text}}</p>
                 <small>by {{this.author}}</small>
                 <small>Created at {{{trimDate this.createdAt}}}</small>
                 {{#ifEquals ../userID this.owner }}
                 <div class="card-actions">
-                    <button id="delete-blog" onclick="" class="btn btn-secondary">Delete</button>
-                    <a href="#" class="btn btn-secondary">Edit</a>
+                    <button type="button" class="btn btn-secondary comment-delete" data-comment-id="{{this._id}}">Delete</button>
+                    <button type="button" class="btn btn-secondary comment-edit" data-comment-id="{{this._id}}">Edit</button>
                 </div>
                 {{/ifEquals}}
             </div>

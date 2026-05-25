@@ -3,3 +3,5 @@
 /mongodb-database
 /todo
 /config
+/logs
+*.log
