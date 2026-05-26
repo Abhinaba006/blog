@@ -1,11 +1,12 @@
 const Blogs = require('../models/blog')
 const Comments = require('../models/comments')
+const tagService = require('./tagsService')
 const logger = require('../utils/logger')
 
 const getPublishedBlogs = async () => {
   try {
     logger.debug('blog-service', 'Fetching published blogs')
-    const blogs = await Blogs.find({ published: true })
+    const blogs = await Blogs.find({ published: true }).populate('tags')
     logger.info('blog-service', 'Published blogs fetched', { count: blogs.length })
     return blogs
   } catch (error) {
@@ -15,7 +16,7 @@ const getPublishedBlogs = async () => {
 }
 
 const getBlogById = async (id) => {
-  return Blogs.findOne({ _id: id })
+  return Blogs.findOne({ _id: id }).populate('tags')
 }
 
 const getBlogWithComments = async (id) => {
@@ -51,6 +52,7 @@ const updateBlog = async (id, data) => {
     blog.text = data.text
     blog.title = data.title
     blog.published = data.published ? true : false
+    blog.tags = data.tags || []
 
     if (!blog.text || !blog.title) {
       logger.warn('blog-service', 'Invalid blog data', { blogId: id })
@@ -69,10 +71,17 @@ const updateBlog = async (id, data) => {
 const createBlog = async (data) => {
   try {
     logger.debug('blog-service', 'Creating new blog', { title: data.title, author: data.author })
+    
+    let tags = []
+    if (data.tags && data.tags.length > 0) {
+      tags = await tagService.resolveExistingTagIds(data.tags)
+    }
+
     const blog = new Blogs({
       title: data.title,
       text: data.text,
       published: data.published ? true : false,
+      tags,
       owner: data.owner,
       author: data.author
     })
@@ -88,6 +97,7 @@ const createBlog = async (data) => {
     }
 
     const newBlog = await blog.save()
+    await newBlog.populate('tags')
     logger.info('blog-service', 'Blog created successfully', { blogId: newBlog._id, title: data.title })
     return newBlog
   } catch (error) {

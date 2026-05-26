@@ -23,7 +23,11 @@ const BlogsSchema = new mongoose.Schema({
         type:Boolean,
         required:true,
         default:false
-    }
+    },
+    tags: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tag'
+    }]
 })
 
 BlogsSchema.set('timestamps', true)

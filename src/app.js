@@ -8,13 +8,18 @@ const socketio = require('socket.io')
 const http = require('http')
 const logger = require('./utils/logger')
 
+require('./db/mongoose')
+
 const userRouter = require('./routers/user')
 const blogRouter = require('./routers/blog')
 const commentRouter = require('./routers/comments')
 const chatRouter = require('./routers/chat')
+const tagsRouter = require('./routers/tags')
+const apiUserRouter = require('./routers/api/user')
+const apiBlogRouter = require('./routers/api/blog')
+const apiTagsRouter = require('./routers/api/tags')
+const apiCommentsRouter = require('./routers/api/comments')
 const {genMsg} = require('./utils/messages')
-
-require('./db/mongoose')
 
 const public = path.join(__dirname, '../public')
 const partials = path.join(__dirname, '../templates/partials')
@@ -44,9 +49,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(express.static(public))
 app.use(express.json())
+app.use('/api', apiUserRouter)
+app.use('/api', apiBlogRouter)
+app.use('/api', apiCommentsRouter)
+app.use('/api', apiTagsRouter)
 app.use(userRouter)
 app.use(blogRouter)
 app.use(commentRouter)
+app.use(tagsRouter)
 
 
 io.on('connection', (socket) => {

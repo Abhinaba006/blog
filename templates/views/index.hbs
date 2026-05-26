@@ -22,6 +22,7 @@
                 </div>
                 <small>Created at {{{trimDate this.createdAt}}}</small>
                 <small>Written by {{this.author}}</small>
+                <small>Tags: {{#each this.tags}}<span class="badge badge-info">{{this.name}}</span>{{/each}}</small>
             </div>
             {{/each}}
         </div>

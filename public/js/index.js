@@ -3,7 +3,7 @@ function deleteBlog(id) {
         method: 'delete',
     })
     .then(() => {
-        location.assign('/');
+        location.assign('/user/me');
     })
     .catch((error) => {
         console.error('Error deleting blog:', error)

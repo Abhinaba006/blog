@@ -20,8 +20,7 @@
                     <a href="/editpost/{{this._id}}" class="btn btn-secondary">Edit</a>
                 </div>
                 {{/if}}
-                <small>Created at {{{trimDate this.createdAt}}}</small>
-            </div>
+                <small>Created at {{{trimDate this.createdAt}}}</small>                <small>Tags: {{#each this.tags}}<span class="badge badge-info">{{this.name}}</span>{{/each}}</small>            </div>
             {{/each}}
 
             {{#if blogs_n}}
@@ -36,8 +35,7 @@
                     <button id="delete-blog" onclick="deleteBlog('{{this._id}}')" class="btn btn-secondary">Delete</button>
                     <a href="/editpost/{{this._id}}" class="btn btn-secondary">Edit</a>
                 </div>
-                <small>Created at {{{trimDate this.createdAt}}}</small>
-            </div>
+                <small>Created at {{{trimDate this.createdAt}}}</small>                <small>Tags: {{#each this.tags}}<span class="badge badge-info">{{this.name}}</span>{{/each}}</small>            </div>
             {{/each}}
             {{/if}}
         </div>

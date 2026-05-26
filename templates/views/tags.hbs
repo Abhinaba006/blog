@@ -1,0 +1,31 @@
+{{>header}}
+
+<body>
+    {{>nav}}
+    <div class="page-shell">
+        <div class="page-card">
+            <div class="page-header">
+                <h1>Tags</h1>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <form id="create-tag-form" class="form-inline" autocomplete="off">
+                        <div class="form-group">
+                            <label for="tag-name" class="control-label">New tag</label>
+                            <input id="tag-name" name="name" class="form-control" placeholder="e.g. programming" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                    <div id="tag-alert" class="alert" role="alert" style="display:none;margin-top:16px;"></div>
+                </div>
+            </div>
+
+            <div class="page-card" style="margin-top:24px;">
+                <h2>All Tags</h2>
+                <div id="tag-list" class="list-group"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/tags.js"></script>
+</body>

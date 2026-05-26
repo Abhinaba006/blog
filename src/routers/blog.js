@@ -42,7 +42,6 @@ router.get('/post', auth, async (req, res) => {
     })
 })
 
-// router for editing post
 router.get('/editpost/:id', auth, async (req, res) => {
     try {
         const blog = await blogService.getBlogForEdit(req.params.id)
@@ -59,6 +58,7 @@ router.post('/editpost/:id', auth, async (req, res) => {
         await blogService.updateBlog(req.params.id, {
             title: req.body.title,
             text: req.body.text,
+            tags: req.body.tags,
             published: req.body.published
         })
         res.redirect('/')

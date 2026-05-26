@@ -27,7 +27,7 @@ async function handleCommentSubmit(e) {
     }
 
     try {
-        const response = await fetch(`/blogs/comment/${postID}`, {
+        const response = await fetch(`/api/blogs/${postID}/comments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ async function deleteComment(commentId) {
     }
 
     try {
-        const response = await fetch(`/blogs/comment/${commentId}`, {
+        const response = await fetch(`/api/comments/${commentId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ async function saveCommentEdit(commentId, newText, commentCard) {
     }
 
     try {
-        const response = await fetch(`/blogs/comment/${commentId}`, {
+        const response = await fetch(`/api/comments/${commentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

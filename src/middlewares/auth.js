@@ -1,4 +1,3 @@
-// const { nextTick } = require("process")
 const jwt = require('jsonwebtoken')
 const User = require("../models/user")
 const logger = require("../utils/logger")
@@ -21,8 +20,11 @@ const auth = async (req, res, next) => {
         next()
     } catch (e) {
         logger.warn('auth-middleware', 'Authentication failed', { error: e.message })
-        res.render('login',{
-            msg:'please login or sign up '
+        if (req.originalUrl && req.originalUrl.startsWith('/api/')) {
+            return res.status(401).json({ error: 'Please login or sign up' })
+        }
+        res.render('login', {
+            msg: 'please login or sign up '
         })
     }
 }

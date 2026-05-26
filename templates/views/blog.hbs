@@ -20,6 +20,7 @@
                 <p>{{blog.text}}</p>
                 <small>Created at {{{trimDate blog.createdAt}}}</small>
                 <small>Written by {{blog.author}}</small>
+                <small>Tags: {{#each blog.tags}}<span class="badge badge-info">{{this.name}}</span>{{/each}}</small>
             </div>
             <div class="page-header">
                 <h2>Comments</h2>

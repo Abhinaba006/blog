@@ -65,7 +65,7 @@ UserSchema.statics.findByCredentials = async (email, password) => {
     const isMatch = await bcrypt.compare(password, user.password)
     // console.log(password)
     if (!isMatch)
-        throw new Error('password bhulis kemne?')
+        throw new Error('password is wrong')
     return user
 }
 
@@ -76,7 +76,6 @@ UserSchema.pre('save', async function (next) {
     }
     next()
 })
-UserSchema.index({ username: 1, email: 1 }, { unique: true }); // forcing for unique
+UserSchema.index({ email: 1 }, { unique: true })
 const User = mongoose.model('User', UserSchema)
-// User.createIndexes();
 module.exports = User
