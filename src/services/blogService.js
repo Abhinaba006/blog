@@ -52,7 +52,8 @@ const updateBlog = async (id, data) => {
     blog.text = data.text
     blog.title = data.title
     blog.published = data.published ? true : false
-    blog.tags = data.tags || []
+    const tagNames = await resolveTagNames(data.tagsName)
+    blog.tagsName = tagNames
 
     if (!blog.text || !blog.title) {
       logger.warn('blog-service', 'Invalid blog data', { blogId: id })
@@ -68,13 +69,25 @@ const updateBlog = async (id, data) => {
   }
 }
 
+const resolveTagNames = async (tagsName) => {
+  try {    
+    logger.debug('blog-service', 'Resolving tag names from IDs', { tagsName })
+    const tagsNames = await tagService.resolveExistingTagNames(tagsName)
+    logger.info('blog-service', 'Tag names resolved', { tagNames: tagsNames })
+    return tagsNames
+  } catch (error) {
+    logger.error('blog-service', 'Error resolving tag names', { tagsName, error: error.message })
+    throw error
+  }
+}
+
 const createBlog = async (data) => {
   try {
     logger.debug('blog-service', 'Creating new blog', { title: data.title, author: data.author, tags: data.tags })
     
     let tagNames = []
     if (data.tags && data.tags.length > 0) {
-      tagsName = await tagService.resolveExistingTagNames(data.tags)
+      tagNames = await resolveTagNames(data.tags)
     }
 
     logger.debug('blog-service', 'Resolved tag names', { tagNames: tagNames })

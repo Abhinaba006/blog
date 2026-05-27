@@ -52,7 +52,7 @@ router.put('/blogs/:id', auth, async (req, res) => {
     const blog = await blogService.updateBlog(req.params.id, {
       title: req.body.title,
       text: req.body.text,
-      tags: req.body.tags,
+      tagsName: req.body.tags,
       published: req.body.published
     })
     res.json({ blog })
