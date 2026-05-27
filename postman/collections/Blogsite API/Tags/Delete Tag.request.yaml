@@ -1,0 +1,5 @@
+$kind: http-request
+name: Delete Tag
+method: DELETE
+url: '{{baseUrl}}/api/tags/{{tagId}}'
+order: 4000

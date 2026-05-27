@@ -1,0 +1,17 @@
+$kind: http-request
+name: Create Blog
+method: POST
+url: '{{baseUrl}}/api/blogs'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "My Blog Post",
+      "text": "Blog content here...",
+      "tags": [],
+      "published": true
+    }

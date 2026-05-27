@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const Blogs = require('./blog')
 
 const commentSchema = new mongoose.Schema({
     text:{
@@ -9,17 +8,25 @@ const commentSchema = new mongoose.Schema({
     owner:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:'user'
+        ref:'users'
     },
     author: {
         type: mongoose.Schema.Types.String,
         required: true,
-        ref: 'user'
+        ref: 'users'
     },
     postID:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref:'blog'
+        ref:'blogs'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
 })
 

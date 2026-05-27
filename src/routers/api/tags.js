@@ -19,7 +19,7 @@ router.get('/tags', auth, async (req, res) => {
 router.post('/tags', auth, async (req, res) => {
     try {
         logger.debug('api-tags-router', 'Creating new tag', { name: req.body.name })
-        const tag = await tagService.createTag({ name: req.body.name })
+        const tag = await tagService.createTag({ name: req.body.name, user: req.user })
         logger.info('api-tags-router', 'Tag created successfully', { tagId: tag._id, name: req.body.name })
         res.status(201).json({ tag })
     } catch (e) {
@@ -28,21 +28,21 @@ router.post('/tags', auth, async (req, res) => {
     }
 })
 
-router.put('/tags/:id', auth, async (req, res) => {
-    try {
-        logger.debug('api-tags-router', 'Updating tag', { tagId: req.params.id, name: req.body.name })
-        const tag = await tagService.updateTag(req.params.id, { name: req.body.name })
-        if (!tag) {
-            logger.warn('api-tags-router', 'Tag not found for update', { tagId: req.params.id })
-            return res.status(404).json({ error: 'Tag not found' })
-        }
-        logger.info('api-tags-router', 'Tag updated successfully', { tagId: req.params.id })
-        res.json({ tag })
-    } catch (e) {
-        logger.error('api-tags-router', 'Error updating tag', { tagId: req.params.id, error: e.message })
-        res.status(400).json({ error: e.message })
-    }
-})
+// router.put('/tags/:id', auth, async (req, res) => {
+//     try {
+//         logger.debug('api-tags-router', 'Updating tag', { tagId: req.params.id, name: req.body.name })
+//         const tag = await tagService.updateTag(req.params.id, { name: req.body.name })
+//         if (!tag) {
+//             logger.warn('api-tags-router', 'Tag not found for update', { tagId: req.params.id })
+//             return res.status(404).json({ error: 'Tag not found' })
+//         }
+//         logger.info('api-tags-router', 'Tag updated successfully', { tagId: req.params.id })
+//         res.json({ tag })
+//     } catch (e) {
+//         logger.error('api-tags-router', 'Error updating tag', { tagId: req.params.id, error: e.message })
+//         res.status(400).json({ error: e.message })
+//     }
+// })
 
 router.delete('/tags/:id', auth, async (req, res) => {
     try {

@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const Blogs = require('../models/blog')
-const UserSchema = new mongoose.Schema({
+const Blogs = require('./blogs')
+const UsersSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
 
 
 //this delete the extra info before converting to json
-UserSchema.methods.toJSON = function () {
+UsersSchema.methods.toJSON = function () {
     const user = this
     const userObj = user.toObject()
     delete userObj.tokens
@@ -48,7 +48,7 @@ UserSchema.methods.toJSON = function () {
     return userObj
 }
 
-UserSchema.methods.generateAuthToken = async function () {
+UsersSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY)
 
@@ -56,8 +56,8 @@ UserSchema.methods.generateAuthToken = async function () {
     await user.save()
     return token
 }
-UserSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
+UsersSchema.statics.findByCredentials = async (email, password) => {
+    const user = await Users.findOne({ email })
     
     if (!user)
         throw new Error('No user found')
@@ -69,13 +69,13 @@ UserSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-UserSchema.pre('save', async function (next) {
+UsersSchema.pre('save', async function (next) {
     const user = this
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 10)
     }
     next()
 })
-UserSchema.index({ email: 1 }, { unique: true })
-const User = mongoose.model('User', UserSchema)
-module.exports = User
+UsersSchema.index({ email: 1 }, { unique: true })
+const Users = mongoose.model('Users', UsersSchema)
+module.exports = Users

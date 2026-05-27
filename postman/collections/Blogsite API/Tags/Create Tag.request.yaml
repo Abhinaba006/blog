@@ -1,0 +1,13 @@
+$kind: http-request
+name: Create Tag
+method: POST
+url: "{{baseUrl}}/api/tags"
+order: 2000
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "tag3, tag4, tag5, ta"
+    }

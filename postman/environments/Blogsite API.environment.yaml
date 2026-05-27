@@ -1,0 +1,34 @@
+name: Blogsite API
+values:
+  - key: baseUrl
+    value: 'http://localhost:3000'
+    type: default
+    enabled: true
+  - key: email
+    value: ''
+    type: default
+    enabled: true
+  - key: password
+    value: ''
+    type: secret
+    enabled: true
+  - key: token
+    value: ''
+    type: secret
+    enabled: true
+  - key: userId
+    value: ''
+    type: default
+    enabled: true
+  - key: blogId
+    value: ''
+    type: default
+    enabled: true
+  - key: commentId
+    value: ''
+    type: default
+    enabled: true
+  - key: tagId
+    value: ''
+    type: default
+    enabled: true

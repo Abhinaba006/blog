@@ -1,0 +1,17 @@
+$kind: http-request
+name: Update Blog
+method: PUT
+url: '{{baseUrl}}/api/blogs/{{blogId}}'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Updated Title",
+      "text": "Updated content...",
+      "tags": [],
+      "published": true
+    }

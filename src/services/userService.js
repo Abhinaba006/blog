@@ -1,5 +1,5 @@
-const User = require('../models/user')
-const Blogs = require('../models/blog')
+const User = require('../models/users')
+const Blogs = require('../models/blogs')
 const logger = require('../utils/logger')
 
 const createUser = async (userData) => {

@@ -1,4 +1,4 @@
-const Blogs = require('../models/blog')
+const Blogs = require('../models/blogs')
 const Comments = require('../models/comments')
 const tagService = require('./tagsService')
 const logger = require('../utils/logger')
@@ -70,18 +70,20 @@ const updateBlog = async (id, data) => {
 
 const createBlog = async (data) => {
   try {
-    logger.debug('blog-service', 'Creating new blog', { title: data.title, author: data.author })
+    logger.debug('blog-service', 'Creating new blog', { title: data.title, author: data.author, tags: data.tags })
     
-    let tags = []
+    let tagNames = []
     if (data.tags && data.tags.length > 0) {
-      tags = await tagService.resolveExistingTagIds(data.tags)
+      tagsName = await tagService.resolveExistingTagNames(data.tags)
     }
+
+    logger.debug('blog-service', 'Resolved tag names', { tagNames: tagNames })
 
     const blog = new Blogs({
       title: data.title,
       text: data.text,
       published: data.published ? true : false,
-      tags,
+      tagsName: tagsName,
       owner: data.owner,
       author: data.author
     })

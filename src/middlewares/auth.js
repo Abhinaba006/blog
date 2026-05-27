@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const User = require("../models/user")
+const Users = require("../models/users")
 const logger = require("../utils/logger")
 
 const auth = async (req, res, next) => {
@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
     try {
         logger.debug('auth-middleware', 'Verifying token')
         const decode = jwt.verify(token, process.env.SECRET_KEY)
-        const user = await User.findOne({ _id: decode._id, 'tokens.token': token })
+        const user = await Users.findOne({ _id: decode._id, 'tokens.token': token })
 
         if (!user) {
             logger.warn('auth-middleware', 'User not found for token', { userId: decode._id })

@@ -1,0 +1,7 @@
+$kind: collection
+name: Comments
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{token}}'

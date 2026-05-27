@@ -1,13 +1,20 @@
 const mongoose = require('mongoose')
 
-const TagsSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true
+const tagsSchema = {
+  name: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.String,
+    required: true,
+    ref: 'users'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
     }
-})
+};
 
-TagsSchema.index({ name: 1 }, { unique: true })
-
-module.exports = mongoose.model('Tag', TagsSchema)
+module.exports = mongoose.model('Tags', tagsSchema)

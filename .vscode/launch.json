@@ -4,12 +4,14 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Blog App",
-      "program": "${workspaceFolder}/src/index.js",
-      "cwd": "${workspaceFolder}",
-      "envFile": "${workspaceFolder}/config/dev.env",
+      "name": "Launch Blog App with Nodemon",
+      "runtimeExecutable": "nodemon",
+      "args": ["${workspaceFolder}/src/index.js"],
+      "restart": true,
       "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/config/dev.env"
     }
   ]
 }

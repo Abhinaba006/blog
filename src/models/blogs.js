@@ -24,9 +24,9 @@ const BlogsSchema = new mongoose.Schema({
         required:true,
         default:false
     },
-    tags: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tag'
+    tagsName: [{
+        type: mongoose.Schema.Types.String,
+        ref: 'Tags'
     }]
 })
 

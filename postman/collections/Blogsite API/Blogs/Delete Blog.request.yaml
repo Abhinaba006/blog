@@ -1,0 +1,5 @@
+$kind: http-request
+name: Delete Blog
+method: DELETE
+url: '{{baseUrl}}/api/blogs/{{blogId}}'
+order: 5000

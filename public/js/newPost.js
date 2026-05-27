@@ -8,8 +8,7 @@ const newPostForm = document.getElementById('new-post-form')
 
 const validatePost = () => {
     const title = $titleInput.value.trim()
-    const text = $textInput.value.trim()
-    const hasContent = title.length > 0 && text.length > 0
+    const hasContent = title.length > 0 
 
     $submitButton.disabled = !hasContent
     $publishWrapper.style.display = hasContent ? 'block' : 'none'
@@ -50,7 +49,6 @@ const handleNewPostSubmit = async (event) => {
 
 if ($titleInput && $textInput) {
     $titleInput.addEventListener('input', validatePost)
-    $textInput.addEventListener('input', validatePost)
     validatePost()
 }
 

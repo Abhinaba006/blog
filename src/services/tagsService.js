@@ -1,5 +1,5 @@
 const Tags = require('../models/tags')
-const Blogs = require('../models/blog')
+const Blogs = require('../models/blogs')
 const logger = require('../utils/logger')
 
 const getTags = async () => {
@@ -17,51 +17,52 @@ const getTagByName = async (name) => {
   return Tags.findOne({ name })
 }
 
-const resolveExistingTagIds = async (tagInput) => {
-  const tagNames = Array.isArray(tagInput) ? tagInput : [tagInput]
-  const normalizedNames = [...new Set(tagNames
-    .map((tag) => (tag || '').toString().trim())
-    .filter((tag) => tag.length > 0))]
+const resolveExistingTagNames = async (tagInput) => {
+  logger.debug('tag-service', 'Resolving existing tag names from input', { tagInput })
+const tagNames = Array.isArray(tagInput) ? tagInput : [tagInput];
+const normalizedNames = [...new Set(tagNames
+  .map((tag) => (tag || '').toString().trim())
+  .filter((tag) => tag.length > 0))];
 
-  const tagIds = []
-  const notFound = []
-  
-  for (const name of normalizedNames) {
-    const tag = await getTagByName(name)
-    if (!tag) {
-      notFound.push(name)
-    } else {
-      tagIds.push(tag._id)
-    }
-  }
+const existingTags = await Tags.find({ name: { $in: normalizedNames } });
+
+const existingTagNames = existingTags.map(tag => tag.name);
+
+const notFound = normalizedNames.filter(name => !existingTagNames.includes(name));
 
   if (notFound.length > 0) {
+    logger.warn('tag-service', 'Some tags not found', { notFound })
     throw new Error(`Tag(s) not found: ${notFound.join(', ')}. Please create tags first in the Tags section.`)
   }
 
-  return tagIds
+  return tagNames
 }
 
 const createTag = async (data) => {
   logger.debug('tag-service', 'Creating new tag', { name: data.name })
-  const tag = new Tags({
-    name: data.name
-  })
-
-  if (!tag.name || tag.name.trim() === '') {
-    logger.warn('tag-service', 'Tag name is required')
-    throw new Error('Tag name is required')
+  // expect s string comma separated list of tags or an array of tag names, normalize to array of trimmed strings
+  const tagNames = Array.isArray(data.name) ? data.name : data.name.split(',').map((tag) => tag.trim())
+  const createdBy = data.user.name
+  const uniqueTagNames = [...new Set(tagNames.filter((tag) => tag.length > 0))]
+  //validate
+  if (uniqueTagNames.length === 0) {
+    logger.warn('tag-service', 'No valid tag names provided')
+    throw new Error('At least one valid tag name is required')
   }
+ 
+  const bulkOps = uniqueTagNames.map((name) => ({
+    updateOne: {
+      filter: { name },
+      update: { $setOnInsert: { name, createdBy } },
+      upsert: true
+    }
+  }))
 
-  const existingTag = await getTagByName(tag.name)
+  const bulkWriteResult = await Tags.bulkWrite(bulkOps)
+  logger.info('tag-service', 'Bulk upsert completed', { matchedCount: bulkWriteResult.matchedCount, modifiedCount: bulkWriteResult.modifiedCount, upsertedCount: bulkWriteResult.upsertedCount })
 
-  if (existingTag) {
-    logger.warn('tag-service', 'Tag with this name already exists', { name: tag.name })
-    throw new Error('Tag with this name already exists')
-  }
-
-  logger.debug('tag-service', 'Saving new tag', { name: tag.name })
-  return tag.save()
+  const createdTags = await Tags.find({ name: { $in: uniqueTagNames } })
+  return createdTags
 }
 
 const updateTag = async (id, data) => {
@@ -96,7 +97,7 @@ const deleteTag = async (id) => {
 module.exports = {
   getTags,
   getTagById,
-  resolveExistingTagIds,
+  resolveExistingTagNames,
   createTag,
   updateTag,
   deleteTag
